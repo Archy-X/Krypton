@@ -1,0 +1,20 @@
+# XCaptcha Configuration
+# Version 1.0.0
+# Plugin by Archyx
+
+captcha:
+  mode: MAP
+  every_join: false
+  enable_fail_kick: true
+  fail_kick_max_attempts: 5
+  map:
+    code_length: 5
+    use_numbers: true
+    use_capital_letters: true
+    block_look: false
+    allow_move:
+      enabled: false
+      duration_ticks: 5
+    force_pitch:
+      enabled: false
+      pitch: 80.0

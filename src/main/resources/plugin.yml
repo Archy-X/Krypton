@@ -1,0 +1,12 @@
+name: XCaptcha
+version: ${project.version}
+main: com.archyx.xcaptcha.XCaptcha
+api-version: 1.15
+authors: [ Archyx ]
+description: An advanced captcha plugin to stop bots on your server
+
+permissions:
+  xcaptcha.reload:
+    default: op
+  xcaptcha.unlock:
+    default: op
