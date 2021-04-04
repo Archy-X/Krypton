@@ -1,10 +1,10 @@
 name: Krypton
 version: ${project.version}
 main: com.archyx.krypton.Krypton
-api-version: 1.15
+api-version: 1.13
 authors: [ Archyx ]
 softdepend: [ ProtocolLib ]
-description: A aptcha plugin to stop bots on your server
+description: A captcha plugin to stop bots on your server
 
 permissions:
   krypton.reload:

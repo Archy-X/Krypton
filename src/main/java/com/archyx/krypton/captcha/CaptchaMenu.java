@@ -4,6 +4,7 @@ import com.archyx.krypton.Krypton;
 import com.archyx.krypton.configuration.Option;
 import com.archyx.krypton.configuration.OptionL;
 import com.archyx.krypton.messages.MessageKey;
+import com.archyx.krypton.util.MaterialUtil;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
@@ -14,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -143,12 +143,6 @@ public class CaptchaMenu implements InventoryProvider {
     }
 
     private List<Material> getValidMaterials() {
-        List<Material> valid = new ArrayList<>();
-        for (Material mat : Material.values()) {
-            if (mat.isItem()) {
-                valid.add(mat);
-            }
-        }
-        return valid;
+        return MaterialUtil.getValidMaterials();
     }
 }
