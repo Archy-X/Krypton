@@ -1,5 +1,6 @@
-package com.archyx.xcaptcha;
+package com.archyx.krypton.captcha;
 
+import com.archyx.krypton.Krypton;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -7,14 +8,14 @@ import java.util.*;
 public class CaptchaManager {
 
     private final Map<Player, CaptchaPlayer> captchaPlayers;
-    private final Set<UUID> offlineCaptchaPlayers;
+    private final Map<UUID, OfflineCaptchaPlayer> offlineCaptchaPlayers;
 
     private final MapGenerator generator;
 
-    public CaptchaManager(XCaptcha plugin) {
+    public CaptchaManager(Krypton plugin) {
         this.generator = plugin.getGenerator();
         captchaPlayers = new HashMap<>();
-        offlineCaptchaPlayers = new HashSet<>();
+        offlineCaptchaPlayers = new HashMap<>();
     }
 
     public Map<Player, CaptchaPlayer> getCaptchaPlayers() {
@@ -30,10 +31,10 @@ public class CaptchaManager {
     }
 
     public boolean isOfflineCaptchaPlayer(UUID id) {
-        return offlineCaptchaPlayers.contains(id);
+        return offlineCaptchaPlayers.containsKey(id);
     }
 
-    public Set<UUID> getOfflineCaptchaPlayers() {
+    public Map<UUID, OfflineCaptchaPlayer> getOfflineCaptchaPlayers() {
         return offlineCaptchaPlayers;
     }
 
@@ -45,8 +46,8 @@ public class CaptchaManager {
         captchaPlayers.remove(player);
     }
 
-    public void addOfflineCaptchaPlayer(UUID id) {
-        offlineCaptchaPlayers.add(id);
+    public void addOfflineCaptchaPlayer(OfflineCaptchaPlayer player) {
+        offlineCaptchaPlayers.put(player.getId(), player);
     }
 
     public void removeOfflineCaptchaPlayer(UUID id) {

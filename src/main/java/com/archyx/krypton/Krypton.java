@@ -1,10 +1,17 @@
-package com.archyx.xcaptcha;
+package com.archyx.krypton;
 
 import co.aikar.commands.PaperCommandManager;
-import com.archyx.xcaptcha.configuration.OptionL;
-import com.archyx.xcaptcha.listeners.CaptchaActivator;
-import com.archyx.xcaptcha.listeners.CaptchaBlockers;
-import com.archyx.xcaptcha.listeners.CaptchaListener;
+import com.archyx.krypton.captcha.CaptchaManager;
+import com.archyx.krypton.captcha.MapGenerator;
+import com.archyx.krypton.commands.Commands;
+import com.archyx.krypton.configuration.OptionL;
+import com.archyx.krypton.data.DataLoader;
+import com.archyx.krypton.listeners.CaptchaActivator;
+import com.archyx.krypton.listeners.CaptchaBlockers;
+import com.archyx.krypton.listeners.CaptchaListener;
+import com.archyx.krypton.listeners.PacketListener;
+import fr.minuskube.inv.InventoryManager;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
@@ -14,29 +21,36 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Objects;
 
-public final class XCaptcha extends JavaPlugin {
+public final class Krypton extends JavaPlugin {
 
     private CaptchaManager manager;
     private MapGenerator generator;
     private OptionL optionL;
+    private InventoryManager inventoryManager;
 
     @Override
     public void onEnable() {
         generator = new MapGenerator();
         manager = new CaptchaManager(this);
-        //Load config and options
+        inventoryManager = new InventoryManager(this);
+        inventoryManager.init();
+        // Load config and options
         loadConfig();
         optionL = new OptionL(this);
         optionL.loadOptions();
-        //Register events and commands
+        // Register events and commands
         registerEvents();
         registerCommands();
-        Bukkit.getLogger().info("[XCaptcha] XCaptcha has been enabled");
+        new Metrics(this, 9430);
+        // Load data
+        new DataLoader(this).loadData();
+        Bukkit.getLogger().info("[Krypton] Krypton has been enabled");
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        // Save data
+        new DataLoader(this).saveData();
     }
 
     private void registerEvents() {
@@ -44,6 +58,10 @@ public final class XCaptcha extends JavaPlugin {
         pm.registerEvents(new CaptchaActivator(this), this);
         pm.registerEvents(new CaptchaBlockers(this), this);
         pm.registerEvents(new CaptchaListener(this), this);
+        if (getServer().getPluginManager().isPluginEnabled("ProtocolLib")) {
+            PacketListener packetListener = new PacketListener(this);
+            packetListener.registerPacketListener();
+        }
     }
 
     private void registerCommands() {
@@ -80,5 +98,9 @@ public final class XCaptcha extends JavaPlugin {
 
     public MapGenerator getGenerator() {
         return generator;
+    }
+
+    public InventoryManager getInventoryManager() {
+        return inventoryManager;
     }
 }

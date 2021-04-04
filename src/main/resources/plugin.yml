@@ -1,12 +1,13 @@
-name: XCaptcha
+name: Krypton
 version: ${project.version}
-main: com.archyx.xcaptcha.XCaptcha
+main: com.archyx.krypton.Krypton
 api-version: 1.15
 authors: [ Archyx ]
+softdepend: [ ProtocolLib ]
 description: An advanced captcha plugin to stop bots on your server
 
 permissions:
-  xcaptcha.reload:
+  krypton.reload:
     default: op
-  xcaptcha.unlock:
+  krypton.unlock:
     default: op

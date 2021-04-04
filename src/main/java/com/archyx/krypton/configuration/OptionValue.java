@@ -1,6 +1,4 @@
-package com.archyx.xcaptcha.configuration;
-
-import org.bukkit.ChatColor;
+package com.archyx.krypton.configuration;
 
 import java.util.ArrayList;
 import java.util.List;

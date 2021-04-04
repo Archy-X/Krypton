@@ -1,6 +1,6 @@
-package com.archyx.xcaptcha;
+package com.archyx.krypton.captcha;
 
-import com.archyx.xcaptcha.configuration.CaptchaMode;
+import com.archyx.krypton.configuration.CaptchaMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -14,10 +14,14 @@ public class CaptchaPlayer {
     private int failedAttempts;
     private long captchaStartTime;
     private boolean allowMove;
+    private boolean allowCommands;
 
-    public CaptchaPlayer(Player player, CaptchaMode mode) {
+    public CaptchaPlayer(Player player, CaptchaMode mode, int failedAttempts) {
         this.player = player;
         this.mode = mode;
+        this.failedAttempts = failedAttempts;
+        allowMove = false;
+        allowCommands = false;
     }
 
     public Player getPlayer() {
@@ -66,6 +70,14 @@ public class CaptchaPlayer {
 
     public void setAllowMove(boolean allowMove) {
         this.allowMove = allowMove;
+    }
+
+    public boolean isAllowCommands() {
+        return allowCommands;
+    }
+
+    public void setAllowCommands(boolean allowCommands) {
+        this.allowCommands = allowCommands;
     }
 
 }

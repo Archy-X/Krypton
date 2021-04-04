@@ -1,4 +1,4 @@
-# XCaptcha Configuration
+# Krypton Configuration
 # Version 1.0.0
 # Plugin by Archyx
 
@@ -12,9 +12,12 @@ captcha:
     use_numbers: true
     use_capital_letters: true
     block_look: false
+    use_protocol_lib: true
     allow_move:
       enabled: false
       duration_ticks: 5
     force_pitch:
       enabled: false
       pitch: 80.0
+  menu:
+    reopen_delay: 40

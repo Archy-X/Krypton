@@ -1,11 +1,11 @@
-package com.archyx.xcaptcha.listeners;
+package com.archyx.krypton.listeners;
 
-import com.archyx.xcaptcha.CaptchaManager;
-import com.archyx.xcaptcha.CaptchaPlayer;
-import com.archyx.xcaptcha.XCaptcha;
-import com.archyx.xcaptcha.configuration.CaptchaMode;
-import com.archyx.xcaptcha.configuration.Option;
-import com.archyx.xcaptcha.configuration.OptionL;
+import com.archyx.krypton.captcha.CaptchaManager;
+import com.archyx.krypton.captcha.CaptchaPlayer;
+import com.archyx.krypton.Krypton;
+import com.archyx.krypton.configuration.CaptchaMode;
+import com.archyx.krypton.configuration.Option;
+import com.archyx.krypton.configuration.OptionL;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,11 +19,11 @@ import java.text.NumberFormat;
 
 public class CaptchaListener implements Listener {
 
-    private final XCaptcha plugin;
+    private final Krypton plugin;
     private final CaptchaManager manager;
     private final NumberFormat nf = new DecimalFormat("#.##");
 
-    public CaptchaListener(XCaptcha plugin) {
+    public CaptchaListener(Krypton plugin) {
         this.plugin = plugin;
         manager = plugin.getManager();
     }
@@ -59,6 +59,4 @@ public class CaptchaListener implements Listener {
             }
         }
     }
-
-
 }

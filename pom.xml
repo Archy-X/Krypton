@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.archyx</groupId>
-    <artifactId>XCaptcha</artifactId>
+    <artifactId>Krypton</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>XCaptcha</name>
+    <name>Krypton</name>
 
     <description>An advanced captcha plugin to stop bots on your server</description>
     <properties>
@@ -26,6 +26,9 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
@@ -43,15 +46,23 @@
                             <relocations>
                                 <relocation>
                                     <pattern>co.aikar.commands</pattern>
-                                    <shadedPattern>com.archyx.xcaptcha.acf</shadedPattern>
+                                    <shadedPattern>com.archyx.krypton.acf</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>co.aikar.locales</pattern>
-                                    <shadedPattern>com.archyx.xcaptcha.locales</shadedPattern>
+                                    <shadedPattern>com.archyx.krypton.locales</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>com.cryptomorin.xseries</pattern>
-                                    <shadedPattern>com.archyx.aureliumskills.xseries</shadedPattern>
+                                    <shadedPattern>com.archyx.krypton.xseries</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>fr.minuskube.inv</pattern>
+                                    <shadedPattern>com.archyx.krypton.inv</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.bstats</pattern>
+                                    <shadedPattern>com.archyx.krypton.bstats</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -76,6 +87,14 @@
             <id>aikar</id>
             <url>https://repo.aikar.co/content/groups/aikar/</url>
         </repository>
+        <repository>
+            <id>dmulloy2-repo</id>
+            <url>https://repo.dmulloy2.net/nexus/repository/public/</url>
+        </repository>
+        <repository>
+            <id>CodeMC</id>
+            <url>https://repo.codemc.org/repository/maven-public</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -95,6 +114,24 @@
             <groupId>com.github.cryptomorin</groupId>
             <artifactId>XSeries</artifactId>
             <version>7.5.3</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>fr.minuskube.inv</groupId>
+            <artifactId>smart-invs</artifactId>
+            <version>1.2.7</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.comphenix.protocol</groupId>
+            <artifactId>ProtocolLib</artifactId>
+            <version>4.5.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>1.7</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

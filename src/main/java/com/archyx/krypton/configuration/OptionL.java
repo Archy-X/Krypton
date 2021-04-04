@@ -1,6 +1,6 @@
-package com.archyx.xcaptcha.configuration;
+package com.archyx.krypton.configuration;
 
-import com.archyx.xcaptcha.XCaptcha;
+import com.archyx.krypton.Krypton;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -15,9 +15,9 @@ public class OptionL {
 
     private static final Map<Option, OptionValue> options = new HashMap<>();
     private static CaptchaMode mode;
-    private final XCaptcha plugin;
+    private final Krypton plugin;
 
-    public OptionL(XCaptcha plugin) {
+    public OptionL(Krypton plugin) {
         this.plugin = plugin;
     }
 
@@ -100,12 +100,12 @@ public class OptionL {
             }
             catch (IllegalArgumentException e) {
                 mode = CaptchaMode.MAP;
-                Bukkit.getLogger().warning("[XCaptcha] Invalid captcha mode, using MAP! Valid options are MAP, MENU, and MOVE");
+                Bukkit.getLogger().warning("[XCaptcha] Invalid captcha mode, using MAP! Valid options are MAP and MENU");
             }
         }
         else {
             mode = CaptchaMode.MAP;
-            Bukkit.getLogger().warning("[XCaptcha] Invalid captcha mode, using MAP! Valid options are MAP, MENU, and MOVE");
+            Bukkit.getLogger().warning("[XCaptcha] Invalid captcha mode, using MAP! Valid options are MAP and MENU");
         }
     }
 

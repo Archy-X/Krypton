@@ -1,7 +1,7 @@
-package com.archyx.xcaptcha;
+package com.archyx.krypton.captcha;
 
-import com.archyx.xcaptcha.configuration.Option;
-import com.archyx.xcaptcha.configuration.OptionL;
+import com.archyx.krypton.configuration.Option;
+import com.archyx.krypton.configuration.OptionL;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -19,6 +19,7 @@ public class MapGenerator {
 
     private final Random r = new Random();
 
+    @SuppressWarnings("deprecation")
     public ItemStack generateMap(Player player, String code) {
         MapView view = Bukkit.createMap(player.getWorld());
         for (MapRenderer renderer : view.getRenderers()) {

@@ -1,10 +1,10 @@
-package com.archyx.xcaptcha.listeners;
+package com.archyx.krypton.listeners;
 
-import com.archyx.xcaptcha.CaptchaManager;
-import com.archyx.xcaptcha.CaptchaPlayer;
-import com.archyx.xcaptcha.XCaptcha;
-import com.archyx.xcaptcha.configuration.Option;
-import com.archyx.xcaptcha.configuration.OptionL;
+import com.archyx.krypton.captcha.CaptchaManager;
+import com.archyx.krypton.captcha.CaptchaPlayer;
+import com.archyx.krypton.Krypton;
+import com.archyx.krypton.configuration.Option;
+import com.archyx.krypton.configuration.OptionL;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,7 +21,7 @@ public class CaptchaBlockers implements Listener {
 
     private final CaptchaManager manager;
 
-    public CaptchaBlockers(XCaptcha plugin) {
+    public CaptchaBlockers(Krypton plugin) {
         this.manager = plugin.getManager();
     }
 
@@ -54,7 +54,8 @@ public class CaptchaBlockers implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onInteract(PlayerInteractEvent event) {
-        if (manager.isCaptchaPlayer(event.getPlayer())) {
+        CaptchaPlayer captchaPlayer = manager.getCaptchaPlayer(event.getPlayer());
+        if (captchaPlayer != null) {
             event.setCancelled(true);
         }
     }
@@ -101,6 +102,7 @@ public class CaptchaBlockers implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
+    @SuppressWarnings("deprecation")
     public void onPickup(PlayerPickupItemEvent event) {
         Player player = event.getPlayer();
         if (manager.isCaptchaPlayer(player)) {
@@ -112,7 +114,8 @@ public class CaptchaBlockers implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         if (event.getWhoClicked() instanceof Player) {
             Player player = (Player) event.getWhoClicked();
-            if (manager.isCaptchaPlayer(player)) {
+            CaptchaPlayer captchaPlayer = manager.getCaptchaPlayer(player);
+            if (captchaPlayer != null) {
                 event.setCancelled(true);
             }
         }

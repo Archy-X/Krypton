@@ -1,4 +1,4 @@
-package com.archyx.xcaptcha.configuration;
+package com.archyx.krypton.configuration;
 
 public enum OptionType {
 
