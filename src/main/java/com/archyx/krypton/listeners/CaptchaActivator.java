@@ -68,7 +68,6 @@ public class CaptchaActivator implements Listener {
 
     private void activateMenuCaptcha(Player player, int failedAttempts) {
        CaptchaPlayer captchaPlayer = new CaptchaPlayer(player, CaptchaMode.MENU, failedAttempts);
-       captchaPlayer.setAllowMove(true);
        manager.addCaptchaPlayer(captchaPlayer);
        new BukkitRunnable() {
            @Override

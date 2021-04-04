@@ -22,7 +22,7 @@ public class OptionL {
     }
 
     public void loadOptions() {
-        Bukkit.getLogger().info("[XCaptcha] Loading config...");
+        Bukkit.getLogger().info("[Krypton] Loading config...");
         //Load the default options
         loadDefaultOptions();
         //Load the FileConfiguration
@@ -63,15 +63,15 @@ public class OptionL {
                 }
                 //Error
                 else {
-                    Bukkit.getLogger().warning("[XCaptcha] Option " + option.name() + " with path " + option.getPath() + " should be of type " + option.getType().name() + ", using default value instead!");
+                    Bukkit.getLogger().warning("[Krypton] Option " + option.name() + " with path " + option.getPath() + " should be of type " + option.getType().name() + ", using default value instead!");
                 }
             }
             else {
-                Bukkit.getLogger().warning("[XCaptcha] Option " + option.name() + " with path " + option.getPath() + " was not found, using default value instead!");
+                Bukkit.getLogger().warning("[Krypton] Option " + option.name() + " with path " + option.getPath() + " was not found, using default value instead!");
             }
         }
         long end = System.currentTimeMillis();
-        Bukkit.getLogger().info("[XCaptcha] Loaded " + loaded + " config options in " + (end - start) + " ms");
+        Bukkit.getLogger().info("[Krypton] Loaded " + loaded + " config options in " + (end - start) + " ms");
     }
 
     private void loadDefaultOptions() {
@@ -100,12 +100,12 @@ public class OptionL {
             }
             catch (IllegalArgumentException e) {
                 mode = CaptchaMode.MAP;
-                Bukkit.getLogger().warning("[XCaptcha] Invalid captcha mode, using MAP! Valid options are MAP and MENU");
+                Bukkit.getLogger().warning("[Krypton] Invalid captcha mode, using MAP! Valid options are MAP and MENU");
             }
         }
         else {
             mode = CaptchaMode.MAP;
-            Bukkit.getLogger().warning("[XCaptcha] Invalid captcha mode, using MAP! Valid options are MAP and MENU");
+            Bukkit.getLogger().warning("[Krypton] Invalid captcha mode, using MAP! Valid options are MAP and MENU");
         }
     }
 
