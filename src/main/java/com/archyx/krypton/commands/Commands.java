@@ -1,10 +1,7 @@
 package com.archyx.krypton.commands;
 
 import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Flags;
-import co.aikar.commands.annotation.Subcommand;
+import co.aikar.commands.annotation.*;
 import com.archyx.krypton.Krypton;
 import com.archyx.krypton.captcha.CaptchaManager;
 import com.archyx.krypton.captcha.CaptchaPlayer;
@@ -36,6 +33,7 @@ public class Commands extends BaseCommand {
 
     @Subcommand("unlock")
     @CommandPermission("krypton.unlock")
+    @CommandCompletion("@players")
     public void onUnlock(CommandSender sender, @Flags("other") Player player) {
         CaptchaPlayer captchaPlayer = manager.getCaptchaPlayer(player);
         if (captchaPlayer != null) {

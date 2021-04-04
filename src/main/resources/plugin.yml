@@ -4,7 +4,7 @@ main: com.archyx.krypton.Krypton
 api-version: 1.15
 authors: [ Archyx ]
 softdepend: [ ProtocolLib ]
-description: An advanced captcha plugin to stop bots on your server
+description: A aptcha plugin to stop bots on your server
 
 permissions:
   krypton.reload:
