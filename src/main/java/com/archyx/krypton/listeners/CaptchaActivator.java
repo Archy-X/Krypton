@@ -1,14 +1,14 @@
 package com.archyx.krypton.listeners;
 
+import com.archyx.krypton.Krypton;
 import com.archyx.krypton.captcha.CaptchaManager;
 import com.archyx.krypton.captcha.CaptchaMenu;
 import com.archyx.krypton.captcha.CaptchaPlayer;
-import com.archyx.krypton.Krypton;
 import com.archyx.krypton.captcha.OfflineCaptchaPlayer;
 import com.archyx.krypton.configuration.CaptchaMode;
 import com.archyx.krypton.configuration.Option;
 import com.archyx.krypton.configuration.OptionL;
-import org.bukkit.ChatColor;
+import com.archyx.krypton.messages.MessageKey;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,7 +16,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class CaptchaActivator implements Listener {
@@ -70,8 +69,6 @@ public class CaptchaActivator implements Listener {
     private void activateMenuCaptcha(Player player, int failedAttempts) {
        CaptchaPlayer captchaPlayer = new CaptchaPlayer(player, CaptchaMode.MENU, failedAttempts);
        captchaPlayer.setAllowMove(true);
-       //captchaPlayer.setAllowInventoryClicks(true);
-       captchaPlayer.setCaptchaStartTime(System.currentTimeMillis());
        manager.addCaptchaPlayer(captchaPlayer);
        new BukkitRunnable() {
            @Override
@@ -88,7 +85,6 @@ public class CaptchaActivator implements Listener {
         String code = manager.getGenerator().generateCode();
         captchaPlayer.setMapCode(code);
         player.getInventory().setItem(0, manager.getGenerator().generateMap(player, code));
-        captchaPlayer.setCaptchaStartTime(System.currentTimeMillis());
         //Force pitch if enabled
         if (OptionL.getBoolean(Option.MAP_FORCE_PITCH_ENABLED)) {
             Location location = player.getLocation();
@@ -108,7 +104,7 @@ public class CaptchaActivator implements Listener {
         else {
             captchaPlayer.setAllowMove(false);
         }
-        player.sendMessage(ChatColor.RED + "Enter the code on the map in chat to be verified");
+        player.sendMessage(plugin.getMessage(MessageKey.MAP_INFO));
         scheduleTask(player);
         manager.addCaptchaPlayer(captchaPlayer);
     }
@@ -118,7 +114,7 @@ public class CaptchaActivator implements Listener {
             @Override
             public void run() {
                 if (manager.isCaptchaPlayer(player)) {
-                    player.sendMessage(ChatColor.RED + "Enter the code on the map in chat to be verified!");
+                    player.sendMessage(plugin.getMessage(MessageKey.MAP_INFO));
                 }
                 else {
                     cancel();
@@ -132,12 +128,11 @@ public class CaptchaActivator implements Listener {
         Player player = event.getPlayer();
         CaptchaPlayer captchaPlayer = manager.getCaptchaPlayer(player);
         if (captchaPlayer != null) {
-            ItemStack slotItem = captchaPlayer.getSlotItem();
-            if (slotItem != null) {
+            if (captchaPlayer.getMode() == CaptchaMode.MAP) {
                 player.getInventory().setItem(0, captchaPlayer.getSlotItem());
             }
             manager.removeCaptchaPlayer(player);
-            manager.addOfflineCaptchaPlayer(new OfflineCaptchaPlayer(player.getUniqueId(), captchaPlayer.getFailedAttempts()));
+            manager.addOfflineCaptchaPlayer(new OfflineCaptchaPlayer(player.getUniqueId(), captchaPlayer.getTotalFailedAttempts()));
         }
     }
 

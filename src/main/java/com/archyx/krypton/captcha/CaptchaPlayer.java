@@ -11,17 +11,15 @@ public class CaptchaPlayer {
     private final CaptchaMode mode;
     private String mapCode;
     private ItemStack slotItem;
+    private int totalFailedAttempts;
     private int failedAttempts;
-    private long captchaStartTime;
     private boolean allowMove;
-    private boolean allowCommands;
 
-    public CaptchaPlayer(Player player, CaptchaMode mode, int failedAttempts) {
+    public CaptchaPlayer(Player player, CaptchaMode mode, int totalFailedAttempts) {
         this.player = player;
         this.mode = mode;
-        this.failedAttempts = failedAttempts;
+        this.totalFailedAttempts = totalFailedAttempts;
         allowMove = false;
-        allowCommands = false;
     }
 
     public Player getPlayer() {
@@ -48,20 +46,21 @@ public class CaptchaPlayer {
         this.slotItem = slotItem;
     }
 
+    public int getTotalFailedAttempts() {
+        return totalFailedAttempts;
+    }
+
+    public void setTotalFailedAttempts(int totalFailedAttempts) {
+        this.totalFailedAttempts = totalFailedAttempts;
+    }
+
     public int getFailedAttempts() {
         return failedAttempts;
     }
 
-    public void setFailedAttempts(int failedAttempts) {
-        this.failedAttempts = failedAttempts;
-    }
-
-    public long getCaptchaStartTime() {
-        return captchaStartTime;
-    }
-
-    public void setCaptchaStartTime(long captchaStartTime) {
-        this.captchaStartTime = captchaStartTime;
+    public void incrementFailedAttempts() {
+        this.failedAttempts++;
+        this.totalFailedAttempts++;
     }
 
     public boolean isAllowMove() {
@@ -70,14 +69,6 @@ public class CaptchaPlayer {
 
     public void setAllowMove(boolean allowMove) {
         this.allowMove = allowMove;
-    }
-
-    public boolean isAllowCommands() {
-        return allowCommands;
-    }
-
-    public void setAllowCommands(boolean allowCommands) {
-        this.allowCommands = allowCommands;
     }
 
 }

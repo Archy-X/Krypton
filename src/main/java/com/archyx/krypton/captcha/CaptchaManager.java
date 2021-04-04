@@ -3,19 +3,22 @@ package com.archyx.krypton.captcha;
 import com.archyx.krypton.Krypton;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 public class CaptchaManager {
 
-    private final Map<Player, CaptchaPlayer> captchaPlayers;
-    private final Map<UUID, OfflineCaptchaPlayer> offlineCaptchaPlayers;
+    private final ConcurrentMap<Player, CaptchaPlayer> captchaPlayers;
+    private final ConcurrentMap<UUID, OfflineCaptchaPlayer> offlineCaptchaPlayers;
 
     private final MapGenerator generator;
 
     public CaptchaManager(Krypton plugin) {
         this.generator = plugin.getGenerator();
-        captchaPlayers = new HashMap<>();
-        offlineCaptchaPlayers = new HashMap<>();
+        captchaPlayers = new ConcurrentHashMap<>();
+        offlineCaptchaPlayers = new ConcurrentHashMap<>();
     }
 
     public Map<Player, CaptchaPlayer> getCaptchaPlayers() {

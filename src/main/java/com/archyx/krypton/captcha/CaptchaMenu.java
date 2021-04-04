@@ -3,11 +3,11 @@ package com.archyx.krypton.captcha;
 import com.archyx.krypton.Krypton;
 import com.archyx.krypton.configuration.Option;
 import com.archyx.krypton.configuration.OptionL;
+import com.archyx.krypton.messages.MessageKey;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -50,13 +50,12 @@ public class CaptchaMenu implements InventoryProvider {
     public void init(Player player, InventoryContents contents) {
         contents.fill(ClickableItem.of(fillItem, e -> {
             if (manager.isCaptchaPlayer(player)) {
-                captchaPlayer.setFailedAttempts(captchaPlayer.getFailedAttempts() + 1);
+                captchaPlayer.incrementFailedAttempts();
                 //Increment fail kick and check
                 if (OptionL.getBoolean(Option.ENABLE_FAIL_KICK)) {
-                    captchaPlayer.setFailedAttempts(captchaPlayer.getFailedAttempts() + 1);
                     if (captchaPlayer.getFailedAttempts() >= OptionL.getInt(Option.FAIL_KICK_MAX_ATTEMPTS)) {
                         player.closeInventory();
-                        player.kickPlayer(ChatColor.RED + "Captcha failed too many times!");
+                        player.kickPlayer(plugin.getMessage(MessageKey.KICK));
                     }
                 }
             }
@@ -68,7 +67,7 @@ public class CaptchaMenu implements InventoryProvider {
             if (manager.isCaptchaPlayer(player)) {
                 player.closeInventory();
                 manager.removeCaptchaPlayer(player);
-                player.sendMessage(ChatColor.GREEN + "Captcha completed!");
+                player.sendMessage(plugin.getMessage(MessageKey.COMPLETE));
             }
             else {
                 player.closeInventory();
@@ -86,7 +85,7 @@ public class CaptchaMenu implements InventoryProvider {
         return SmartInventory.builder()
                 .provider(new CaptchaMenu(captchaPlayer, plugin.getManager(), plugin))
                 .size(6, 9)
-                .title("Click the item to be verified")
+                .title(plugin.getMessage(MessageKey.MENU_TITLE))
                 .manager(plugin.getInventoryManager())
                 .build();
     }
@@ -95,7 +94,7 @@ public class CaptchaMenu implements InventoryProvider {
         return SmartInventory.builder()
                 .provider(new CaptchaMenu(captchaPlayer, plugin.getManager(), plugin, fillItem, clickItem))
                 .size(6, 9)
-                .title("Click the item to be verified")
+                .title(plugin.getMessage(MessageKey.MENU_TITLE))
                 .manager(plugin.getInventoryManager())
                 .build();
     }
@@ -123,7 +122,7 @@ public class CaptchaMenu implements InventoryProvider {
         ItemStack item = new ItemStack(valid.get(r.nextInt(valid.size())));
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            meta.setDisplayName(ChatColor.RED + "DO NOT CLICK ME");
+            meta.setDisplayName(plugin.getMessage(MessageKey.MENU_FILL_ITEM));
             item.setItemMeta(meta);
         }
         return item;
@@ -137,7 +136,7 @@ public class CaptchaMenu implements InventoryProvider {
         } while (item.getType() == fillItem.getType());
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            meta.setDisplayName(ChatColor.GREEN + "CLICK ME!");
+            meta.setDisplayName(plugin.getMessage(MessageKey.MENU_CLICK_ITEM));
             item.setItemMeta(meta);
         }
         return item;

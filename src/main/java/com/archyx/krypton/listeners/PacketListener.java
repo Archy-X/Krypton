@@ -6,6 +6,7 @@ import com.archyx.krypton.Krypton;
 import com.archyx.krypton.configuration.CaptchaMode;
 import com.archyx.krypton.configuration.Option;
 import com.archyx.krypton.configuration.OptionL;
+import com.archyx.krypton.messages.MessageKey;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
@@ -17,24 +18,20 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-
 public class PacketListener {
 
-    private final Krypton plugin;
+    private final Krypton krypton;
     private final ProtocolManager protocolManager;
     private final CaptchaManager manager;
-    private final NumberFormat nf = new DecimalFormat("#.##");
 
-    public PacketListener(Krypton plugin) {
-        this.plugin = plugin;
+    public PacketListener(Krypton krypton) {
+        this.krypton = krypton;
         protocolManager = ProtocolLibrary.getProtocolManager();
-        manager = plugin.getManager();
+        manager = krypton.getManager();
     }
 
     public void registerPacketListener() {
-        protocolManager.addPacketListener(new PacketAdapter(plugin, ListenerPriority.NORMAL, PacketType.Play.Client.CHAT) {
+        protocolManager.addPacketListener(new PacketAdapter(krypton, ListenerPriority.NORMAL, PacketType.Play.Client.CHAT) {
             @Override
             public void onPacketReceiving(PacketEvent event) {
                 if (event.getPacketType() == PacketType.Play.Client.CHAT) {
@@ -48,22 +45,20 @@ public class PacketListener {
                     event.setCancelled(true);
                     if (captchaPlayer.getMode() == CaptchaMode.MAP) {
                         if (ChatColor.stripColor(message).equals(captchaPlayer.getMapCode())) {
-                            long startTime = captchaPlayer.getCaptchaStartTime();
-                            long endTime = System.currentTimeMillis();
-                            double seconds = (double) (endTime - startTime) / 1000;
-                            player.sendMessage(ChatColor.GREEN + "Captcha Complete! " + ChatColor.AQUA + "(" + nf.format(seconds) + "s)");
+                            player.sendMessage(krypton.getMessage(MessageKey.COMPLETE));
                             player.getInventory().setItem(0, captchaPlayer.getSlotItem());
                             manager.removeCaptchaPlayer(player);
                         }
                         else {
-                            player.sendMessage(ChatColor.YELLOW + "Captcha incorrect, try again!");
+                            player.sendMessage(krypton.getMessage(MessageKey.MAP_INCORRECT));
                             if (OptionL.getBoolean(Option.ENABLE_FAIL_KICK)) {
-                                captchaPlayer.setFailedAttempts(captchaPlayer.getFailedAttempts() + 1);
+                                captchaPlayer.incrementFailedAttempts();
                                 if (captchaPlayer.getFailedAttempts() >= OptionL.getInt(Option.FAIL_KICK_MAX_ATTEMPTS)) {
                                     new BukkitRunnable() {
                                         @Override
                                         public void run() {
-                                            player.kickPlayer(ChatColor.RED + "Captcha failed too many times!");
+                                            player.getInventory().setItem(0, captchaPlayer.getSlotItem());
+                                            player.kickPlayer(krypton.getMessage(MessageKey.KICK));
                                         }
                                     }.runTask(plugin);
                                 }

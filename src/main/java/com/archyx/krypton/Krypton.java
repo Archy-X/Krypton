@@ -2,18 +2,23 @@ package com.archyx.krypton;
 
 import co.aikar.commands.PaperCommandManager;
 import com.archyx.krypton.captcha.CaptchaManager;
+import com.archyx.krypton.captcha.CaptchaPlayer;
 import com.archyx.krypton.captcha.MapGenerator;
 import com.archyx.krypton.commands.Commands;
+import com.archyx.krypton.configuration.CaptchaMode;
 import com.archyx.krypton.configuration.OptionL;
 import com.archyx.krypton.data.DataLoader;
 import com.archyx.krypton.listeners.CaptchaActivator;
 import com.archyx.krypton.listeners.CaptchaBlockers;
 import com.archyx.krypton.listeners.CaptchaListener;
 import com.archyx.krypton.listeners.PacketListener;
+import com.archyx.krypton.messages.MessageKey;
+import com.archyx.krypton.messages.MessageManager;
 import fr.minuskube.inv.InventoryManager;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -27,6 +32,7 @@ public final class Krypton extends JavaPlugin {
     private MapGenerator generator;
     private OptionL optionL;
     private InventoryManager inventoryManager;
+    private MessageManager messageManager;
 
     @Override
     public void onEnable() {
@@ -44,11 +50,21 @@ public final class Krypton extends JavaPlugin {
         new Metrics(this, 9430);
         // Load data
         new DataLoader(this).loadData();
+        // Load messages
+        messageManager = new MessageManager(this);
+        messageManager.load();
         Bukkit.getLogger().info("[Krypton] Krypton has been enabled");
     }
 
     @Override
     public void onDisable() {
+        // Put active captcha player items back
+        for (CaptchaPlayer captchaPlayer : manager.getCaptchaPlayers().values()) {
+            ItemStack item = captchaPlayer.getSlotItem();
+            if (captchaPlayer.getMode() == CaptchaMode.MAP) {
+                captchaPlayer.getPlayer().getInventory().setItem(0, item);
+            }
+        }
         // Save data
         new DataLoader(this).saveData();
     }
@@ -102,5 +118,13 @@ public final class Krypton extends JavaPlugin {
 
     public InventoryManager getInventoryManager() {
         return inventoryManager;
+    }
+
+    public MessageManager getMessageManager() {
+        return messageManager;
+    }
+
+    public String getMessage(MessageKey messageKey) {
+        return messageManager.getMessage(messageKey);
     }
 }

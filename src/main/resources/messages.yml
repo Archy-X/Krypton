@@ -1,0 +1,16 @@
+map:
+  info: '&cEnter the code on the map in chat to be verified'
+  incorrect: '&eCaptcha incorrect, try again!'
+menu:
+  title: Click the item to be verified
+  fill_item: '&cDO NOT CLICK ME'
+  click_item: '&aCLICK ME!'
+kick: '&cCaptcha failed too many times!'
+complete: '&aCaptcha completed!'
+commands:
+  reload: '&aConfig reloaded!'
+  unlock:
+    sender: '&6{player} has been unlocked from the captcha!'
+    target: '&bYou have been unlocked from the captcha!'
+    not_found: '&6{player} &cis not in a captcha!'
+file_version: 1

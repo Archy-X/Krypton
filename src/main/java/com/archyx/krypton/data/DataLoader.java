@@ -45,11 +45,12 @@ public class DataLoader {
             plugin.saveResource("data.yml", false);
         }
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+        config.set("failed_players", null);
         for (OfflineCaptchaPlayer player : manager.getOfflineCaptchaPlayers().values()) {
             config.set("failed_players." + player.getId().toString(), player.getFailedAttempts());
         }
         for (CaptchaPlayer player : manager.getCaptchaPlayers().values()) {
-            config.set("failed_players." + player.getPlayer().getUniqueId().toString(), player.getFailedAttempts());
+            config.set("failed_players." + player.getPlayer().getUniqueId().toString(), player.getTotalFailedAttempts());
         }
         try {
             config.save(file);
