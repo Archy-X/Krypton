@@ -1,2 +1,2 @@
 # Krypton
-An advanced Minecraft captcha plugin to stop bots
+A Minecraft captcha plugin to stop bots
