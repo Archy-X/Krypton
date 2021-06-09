@@ -12,6 +12,7 @@ public class CaptchaManager {
 
     private final ConcurrentMap<Player, CaptchaPlayer> captchaPlayers;
     private final ConcurrentMap<UUID, OfflineCaptchaPlayer> offlineCaptchaPlayers;
+    private boolean enabled;
 
     private final MapGenerator generator;
 
@@ -55,6 +56,14 @@ public class CaptchaManager {
 
     public void removeOfflineCaptchaPlayer(UUID id) {
         offlineCaptchaPlayers.remove(id);
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public MapGenerator getGenerator() {

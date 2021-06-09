@@ -14,7 +14,8 @@ public enum Option {
     MAP_FORCE_PITCH_PITCH("captcha.map.force_pitch.pitch", OptionType.DOUBLE),
     MAP_ALLOW_MOVE_ENABLED("captcha.map.allow_move.enabled", OptionType.BOOLEAN),
     MAP_ALLOW_MOVE_DURATION_TICKS("captcha.map.allow_move.duration_ticks", OptionType.INT),
-    MENU_REOPEN_DELAY("captcha.menu.reopen_delay", OptionType.INT);
+    MENU_REOPEN_DELAY("captcha.menu.reopen_delay", OptionType.INT),
+    ENABLE_ON_STARTUP("captcha.enable_on_startup", OptionType.BOOLEAN);
 
     private final String path;
     private final OptionType type;

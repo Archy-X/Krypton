@@ -13,4 +13,10 @@ commands:
     sender: '&6{player} has been unlocked from the captcha!'
     target: '&bYou have been unlocked from the captcha!'
     not_found: '&6{player} &cis not in a captcha!'
-file_version: 1
+  enable:
+    enabled: '&aCaptcha has been enabled'
+    already_enabled: '&eCaptcha is already enabled!'
+  disable:
+    disabled: '&cCaptcha has been disabled'
+    already_disabled: '&eCaptcha is already disabled!'
+file_version: 2

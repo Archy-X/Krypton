@@ -49,4 +49,27 @@ public class Commands extends BaseCommand {
             sender.sendMessage(StringUtils.replace(plugin.getMessage(MessageKey.UNLOCK_NOT_FOUND), "{player}", player.getName()));
         }
     }
+
+    @Subcommand("enable")
+    @CommandPermission("krypton.toggle")
+    public void onEnable(CommandSender sender) {
+        if (!manager.isEnabled()) {
+            manager.setEnabled(true);
+            sender.sendMessage(plugin.getMessage(MessageKey.ENABLE_ENABLED));
+        } else {
+            sender.sendMessage(plugin.getMessage(MessageKey.ENABLE_ALREADY_ENABLED));
+        }
+    }
+
+    @Subcommand("disable")
+    @CommandPermission("krypton.toggle")
+    public void onDisable(CommandSender sender) {
+        if (manager.isEnabled()) {
+            manager.setEnabled(false);
+            sender.sendMessage(plugin.getMessage(MessageKey.DISABLE_DISABLED));
+        } else {
+            sender.sendMessage(plugin.getMessage(MessageKey.DISABLE_ALREADY_DISABLED));
+        }
+    }
+
 }

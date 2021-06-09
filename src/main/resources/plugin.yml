@@ -11,3 +11,5 @@ permissions:
     default: op
   krypton.unlock:
     default: op
+  krypton.toggle:
+    default: op

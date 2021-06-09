@@ -6,6 +6,7 @@ import com.archyx.krypton.captcha.CaptchaPlayer;
 import com.archyx.krypton.captcha.MapGenerator;
 import com.archyx.krypton.commands.Commands;
 import com.archyx.krypton.configuration.CaptchaMode;
+import com.archyx.krypton.configuration.Option;
 import com.archyx.krypton.configuration.OptionL;
 import com.archyx.krypton.data.DataLoader;
 import com.archyx.krypton.listeners.CaptchaActivator;
@@ -53,6 +54,9 @@ public final class Krypton extends JavaPlugin {
         // Load messages
         messageManager = new MessageManager(this);
         messageManager.load();
+        if (OptionL.getBoolean(Option.ENABLE_ON_STARTUP)) {
+            manager.setEnabled(true);
+        }
         Bukkit.getLogger().info("[Krypton] Krypton has been enabled");
     }
 

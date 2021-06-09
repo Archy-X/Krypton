@@ -31,6 +31,7 @@ public class CaptchaActivator implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+        if (!manager.isEnabled()) return; // Check if enabled
         if (manager.isOfflineCaptchaPlayer(player.getUniqueId())) {
             activate(player, manager.getOfflineCaptchaPlayers().get(player.getUniqueId()).getFailedAttempts());
             manager.removeOfflineCaptchaPlayer(player.getUniqueId());
