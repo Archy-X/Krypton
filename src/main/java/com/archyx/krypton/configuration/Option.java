@@ -2,6 +2,7 @@ package com.archyx.krypton.configuration;
 
 public enum Option {
 
+    API_MODE("api_mode", OptionType.BOOLEAN),
     CAPTCHA_EVERY_JOIN("captcha.every_join", OptionType.BOOLEAN),
     ENABLE_FAIL_KICK("captcha.enable_fail_kick", OptionType.BOOLEAN),
     FAIL_KICK_MAX_ATTEMPTS("captcha.fail_kick_max_attempts", OptionType.INT),

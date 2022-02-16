@@ -50,7 +50,7 @@ public class DataLoader {
             config.set("failed_players." + player.getId().toString(), player.getFailedAttempts());
         }
         for (CaptchaPlayer player : manager.getCaptchaPlayers().values()) {
-            config.set("failed_players." + player.getPlayer().getUniqueId().toString(), player.getTotalFailedAttempts());
+            config.set("failed_players." + player.getPlayer().getUniqueId(), player.getTotalFailedAttempts());
         }
         try {
             config.save(file);
