@@ -1,5 +1,4 @@
 # Krypton Configuration
-# Version 1.0.0
 # Plugin by Archyx
 
 captcha:
@@ -22,3 +21,5 @@ captcha:
       pitch: 80.0
   menu:
     reopen_delay: 40
+
+api_mode: false

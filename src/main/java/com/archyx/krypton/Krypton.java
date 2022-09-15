@@ -29,6 +29,7 @@ import java.util.Objects;
 
 public final class Krypton extends JavaPlugin {
 
+    private final CaptchaActivator captchaActivator = new CaptchaActivator(this);
     private CaptchaManager manager;
     private MapGenerator generator;
     private OptionL optionL;
@@ -75,7 +76,7 @@ public final class Krypton extends JavaPlugin {
 
     private void registerEvents() {
         PluginManager pm = Bukkit.getPluginManager();
-        pm.registerEvents(new CaptchaActivator(this), this);
+        pm.registerEvents(captchaActivator, this);
         pm.registerEvents(new CaptchaBlockers(this), this);
         pm.registerEvents(new CaptchaListener(this), this);
         if (getServer().getPluginManager().isPluginEnabled("ProtocolLib")) {
@@ -111,6 +112,8 @@ public final class Krypton extends JavaPlugin {
     public OptionL getOptionL() {
         return optionL;
     }
+
+    public CaptchaActivator getActivator() { return captchaActivator; }
 
     public CaptchaManager getManager() {
         return manager;

@@ -6,6 +6,8 @@ import com.archyx.krypton.Krypton;
 import com.archyx.krypton.configuration.CaptchaMode;
 import com.archyx.krypton.configuration.Option;
 import com.archyx.krypton.configuration.OptionL;
+import com.archyx.krypton.events.PlayerCaptchaFailEvent;
+import com.archyx.krypton.events.PlayerCaptchaSolveEvent;
 import com.archyx.krypton.messages.MessageKey;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
@@ -14,6 +16,7 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -45,12 +48,16 @@ public class PacketListener {
                     event.setCancelled(true);
                     if (captchaPlayer.getMode() == CaptchaMode.MAP) {
                         if (ChatColor.stripColor(message).equals(captchaPlayer.getMapCode())) {
+                            Bukkit.getPluginManager().callEvent(new PlayerCaptchaSolveEvent(captchaPlayer));
+
                             player.sendMessage(krypton.getMessage(MessageKey.COMPLETE));
                             player.getInventory().setItem(0, captchaPlayer.getSlotItem());
                             manager.removeCaptchaPlayer(player);
-                        }
-                        else {
+                        } else {
+                            Bukkit.getPluginManager().callEvent(new PlayerCaptchaFailEvent(captchaPlayer));
+
                             player.sendMessage(krypton.getMessage(MessageKey.MAP_INCORRECT));
+
                             if (OptionL.getBoolean(Option.ENABLE_FAIL_KICK)) {
                                 captchaPlayer.incrementFailedAttempts();
                                 if (captchaPlayer.getFailedAttempts() >= OptionL.getInt(Option.FAIL_KICK_MAX_ATTEMPTS)) {
