@@ -7,7 +7,7 @@ import com.archyx.krypton.captcha.CaptchaManager;
 import com.archyx.krypton.captcha.CaptchaPlayer;
 import com.archyx.krypton.configuration.CaptchaMode;
 import com.archyx.krypton.messages.MessageKey;
-import org.apache.commons.lang.StringUtils;
+import com.archyx.krypton.util.TextUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -43,10 +43,10 @@ public class Commands extends BaseCommand {
                 player.closeInventory();
             }
             manager.removeCaptchaPlayer(player);
-            sender.sendMessage(StringUtils.replace(plugin.getMessage(MessageKey.UNLOCK_SENDER), "{player}", player.getName()));
+            sender.sendMessage(TextUtil.replace(plugin.getMessage(MessageKey.UNLOCK_SENDER), "{player}", player.getName()));
             player.sendMessage(plugin.getMessage(MessageKey.UNLOCK_TARGET));
         } else {
-            sender.sendMessage(StringUtils.replace(plugin.getMessage(MessageKey.UNLOCK_NOT_FOUND), "{player}", player.getName()));
+            sender.sendMessage(TextUtil.replace(plugin.getMessage(MessageKey.UNLOCK_NOT_FOUND), "{player}", player.getName()));
         }
     }
 

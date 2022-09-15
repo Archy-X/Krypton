@@ -1,7 +1,7 @@
 package com.archyx.krypton.messages;
 
 import com.archyx.krypton.Krypton;
-import org.apache.commons.lang.StringUtils;
+import com.archyx.krypton.util.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -42,7 +42,7 @@ public class MessageManager {
         for (MessageKey key : MessageKey.values()) {
             String message = config.getString(key.getPath());
             if (message != null) {
-                messages.put(key, StringUtils.replace(message, "&", "§"));
+                messages.put(key, TextUtil.replace(message, "&", "§"));
             }
         }
     }
