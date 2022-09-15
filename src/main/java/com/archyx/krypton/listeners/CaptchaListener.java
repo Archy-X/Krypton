@@ -36,13 +36,15 @@ public class CaptchaListener implements Listener {
             event.setCancelled(true);
             if (captchaPlayer.getMode() == CaptchaMode.MAP) {
                 if (ChatColor.stripColor(event.getMessage()).equals(captchaPlayer.getMapCode())) {
-                    Bukkit.getPluginManager().callEvent(new PlayerCaptchaSolveEvent(captchaPlayer));
+                    plugin.getServer().getScheduler().runTask(plugin, () ->
+                            Bukkit.getPluginManager().callEvent(new PlayerCaptchaSolveEvent(captchaPlayer)));
 
                     player.sendMessage(plugin.getMessage(MessageKey.COMPLETE));
                     player.getInventory().setItem(0, captchaPlayer.getSlotItem());
                     manager.removeCaptchaPlayer(player);
                 } else {
-                    Bukkit.getPluginManager().callEvent(new PlayerCaptchaFailEvent(captchaPlayer));
+                    plugin.getServer().getScheduler().runTask(plugin, () ->
+                            Bukkit.getPluginManager().callEvent(new PlayerCaptchaFailEvent(captchaPlayer)));
 
                     player.sendMessage(plugin.getMessage(MessageKey.MAP_INCORRECT));
 

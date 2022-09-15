@@ -48,13 +48,17 @@ public class PacketListener {
                     event.setCancelled(true);
                     if (captchaPlayer.getMode() == CaptchaMode.MAP) {
                         if (ChatColor.stripColor(message).equals(captchaPlayer.getMapCode())) {
-                            Bukkit.getPluginManager().callEvent(new PlayerCaptchaSolveEvent(captchaPlayer));
+                            // Call API event on main thread
+                            plugin.getServer().getScheduler().runTask(plugin, () ->
+                                    Bukkit.getPluginManager().callEvent(new PlayerCaptchaSolveEvent(captchaPlayer)));
 
                             player.sendMessage(krypton.getMessage(MessageKey.COMPLETE));
                             player.getInventory().setItem(0, captchaPlayer.getSlotItem());
                             manager.removeCaptchaPlayer(player);
                         } else {
-                            Bukkit.getPluginManager().callEvent(new PlayerCaptchaFailEvent(captchaPlayer));
+                            // Call API event on main thread
+                            plugin.getServer().getScheduler().runTask(plugin, () ->
+                                    Bukkit.getPluginManager().callEvent(new PlayerCaptchaFailEvent(captchaPlayer)));
 
                             player.sendMessage(krypton.getMessage(MessageKey.MAP_INCORRECT));
 
